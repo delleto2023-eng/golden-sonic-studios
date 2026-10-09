@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Golden Sonic Studios</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">✦</div>
+          <div>
+            <div class="brand-name">Golden Sonic</div>
+            <div class="brand-sub">369 Studio</div>
+          </div>
+        </div>
+
+        <div class="transport">
+          <button class="transport-btn" id="playBtn">Play</button>
+          <button class="transport-btn" id="pauseBtn">Pause</button>
+          <button class="transport-btn" id="stopBtn">Stop</button>
+        </div>
+
+        <div class="tempo">
+          <label for="bpm">BPM</label>
+          <input id="bpm" type="range" min="70" max="180" step="1" value="116" />
+          <span id="bpmValue">116</span>
+        </div>
+
+        <label class="upload-wrap">
+          <input id="imageUpload" type="file" accept=".png,.jpg,.jpeg,.webp,.gif,.bmp,.tif,.tiff,.heic,.heif,.avif,.ico,.svg,image/*" />
+          <span>Upload Image</span>
+        </label>
+      </header>
+
+      <main class="studio-stage" id="studioStage">
+        <div class="scene-overlay"></div>
+
+        <div class="studio-scene" id="studioScene">
+          <div class="ambient-glow glow-1"></div>
+          <div class="ambient-glow glow-2"></div>
+
+          <div class="speaker speaker-left">
+            <div class="speaker-ring"></div>
+          </div>
+          <div class="speaker speaker-right">
+            <div class="speaker-ring"></div>
+          </div>
+
+          <div class="mic-stand">
+            <div class="mic-neck"></div>
+            <div class="mic-body"></div>
+          </div>
+
+          <div class="mix-console">
+            <div class="console-header">
+              <span>GOLDEN MIX</span>
+            </div>
+            <div class="fader-bank">
+              <span class="fader"></span>
+              <span class="fader"></span>
+              <span class="fader"></span>
+              <span class="fader"></span>
+              <span class="fader"></span>
+              <span class="fader"></span>
+              <span class="fader"></span>
+              <span class="fader"></span>
+            </div>
+            <div class="console-knobs">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+
+          <div class="chair">
+            <div class="chair-back"></div>
+            <div class="chair-seat"></div>
+            <div class="chair-leg"></div>
+          </div>
+
+          <div class="piano-scene" id="pianoScene">
+            <div class="piano-body">
+              <div class="piano-keys">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window arrangement-window" data-window="arrangement">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Arrangement</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body"><div class="timeline-grid" id="arrangementGrid"></div></div>
+        </div>
+
+        <div class="window channel-window" data-window="channel">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Channel Rack</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body channel-list" id="channelList"></div>
+        </div>
+
+        <div class="window piano-window" data-window="piano">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Piano Roll</span>
+            <div class="window-actions"><button id="togglePianoScene">⇄</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body">
+            <div class="piano-roll-grid" id="pianoRollGrid"></div>
+          </div>
+        </div>
+
+        <div class="window ai-window" data-window="ai">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>AI Composer</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body ai-panel">
+            <div class="chip-row">
+              <button class="chip active">Lo-fi</button>
+              <button class="chip">House</button>
+              <button class="chip">Synthwave</button>
+              <button class="chip">R&B</button>
+            </div>
+            <div class="ai-seed">
+              <label>mood</label>
+              <select id="moodSelect">
+                <option>Dreamy</option>
+                <option>Energetic</option>
+                <option>Dark</option>
+                <option>Epic</option>
+              </select>
+            </div>
+            <div class="ai-seed">
+              <label>key</label>
+              <select id="keySelect">
+                <option>C</option>
+                <option>D</option>
+                <option>G</option>
+                <option>A</option>
+              </select>
+            </div>
+            <button class="generate-btn" id="generateBtn">Generate Progression</button>
+            <div class="progression-box" id="progressionBox">Cmaj7 - Am7 - Fmaj7 - G7</div>
+          </div>
+        </div>
+
+        <div class="window eq-window" data-window="eq">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>EQ</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body param-panel">
+            <label>Low<input type="range" min="-24" max="24" value="2" /></label>
+            <label>Mid<input type="range" min="-24" max="24" value="4" /></label>
+            <label>High<input type="range" min="-24" max="24" value="-2" /></label>
+          </div>
+        </div>
+
+        <div class="window comp-window" data-window="comp">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Compressor</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body param-panel">
+            <label>Threshold<input type="range" min="-30" max="0" value="-10" /></label>
+            <label>Ratio<input type="range" min="1" max="10" value="4" /></label>
+            <label>Attack<input type="range" min="0" max="100" value="30" /></label>
+          </div>
+        </div>
+
+        <div class="window limiter-window" data-window="limiter">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Limiter</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body param-panel">
+            <label>Output<input type="range" min="-12" max="0" value="-1" /></label>
+            <label>Release<input type="range" min="20" max="500" value="120" /></label>
+          </div>
+        </div>
+
+        <div class="window stereo-window" data-window="stereo">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Stereo Field</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body param-panel">
+            <label>Width<input type="range" min="0" max="200" value="120" /></label>
+            <label>Pan<input type="range" min="-100" max="100" value="0" /></label>
+          </div>
+        </div>
+
+        <div class="window meter-window" data-window="meter">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Loudness</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body meter-panel">
+            <div class="meter-rail"><span id="meterFill"></span></div>
+            <div class="loudness-readout">-14 LUFS</div>
+          </div>
+        </div>
+
+        <div class="window export-window" data-window="export">
+          <div class="window-titlebar">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <span>Export</span>
+            <div class="window-actions"><button>—</button><button>□</button><button>×</button></div>
+          </div>
+          <div class="window-body export-panel">
+            <div class="export-buttons">
+              <button>WAV</button>
+              <button>MP3</button>
+              <button>Stem</button>
+            </div>
+            <button class="generate-btn" id="exportBtn">Render Project</button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
